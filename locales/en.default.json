@@ -5,6 +5,10 @@
     "checkout": "Checkout",
     "newsletter": "Sign up for newsletter"
   },
+  "onboarding": {
+    "product_title": "Product title",
+    "collection_title": "Collection title"
+  },
   "sections": {
     "header": {
       "menu_label": "Menu"
