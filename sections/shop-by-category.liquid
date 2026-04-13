@@ -1,0 +1,86 @@
+﻿<div id="shopify-section-{{ section.id }}" class="shopify-section index-section">
+  <div data-section-id="{{ section.id }}" data-section-type="shop-by-category">
+    <div class="page-width">
+      <div class="section-header">
+        <h2 class="section-header__title">{{ section.settings.heading }}</h2>
+        {% if section.settings.subheading != blank %}
+          <div class="section-header__subtext">{{ section.settings.subheading }}</div>
+        {% endif %}
+      </div>
+
+      {% if section.blocks.size > 0 %}
+        <div class="grid grid--uniform">
+          {% for block in section.blocks %}
+            <div class="grid__item small--one-half medium-up--one-quarter">
+              <a href="{{ block.settings.link }}" class="collection-item collection-item--overlaid-box">
+                <div class="image-wrap">
+                  {% if block.settings.image != blank %}
+                    <div class="collection-image collection-image--square" style="background-image: url('{{ block.settings.image | img_url: '800x' }}'); background-position: center center;"></div>
+                  {% endif %}
+                </div>
+                <span class="collection-item__title collection-item__title--overlaid-box collection-item__title--body collection-item__title--center">
+                  <span>{{ block.settings.title }}</span>
+                </span>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center">
+          <p>Add categories in the section settings to display this grid.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop by category",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Shop by category"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Section subheading",
+      "default": "Browse our most popular collections."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Category image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title",
+          "default": "Category"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Category link",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by category",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

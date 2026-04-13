@@ -1,0 +1,13 @@
+{
+  "general": {
+    "search": "Search",
+    "cart": "Cart",
+    "checkout": "Checkout",
+    "newsletter": "Sign up for newsletter"
+  },
+  "sections": {
+    "header": {
+      "menu_label": "Menu"
+    }
+  }
+}

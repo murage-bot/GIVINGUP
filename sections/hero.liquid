@@ -1,0 +1,155 @@
+﻿<div class="index-section index-section--hero">
+  <div class="hero">
+    {% assign hero_slides = section.blocks %}
+
+    {% if hero_slides.size > 0 %}
+      <div class="hero__slides">
+        {% for block in hero_slides %}
+          <div id="hero-slide-{{ block.id }}" class="hero__slide">
+            {% if block.settings.image != blank %}
+              <div class="hero__image-wrapper">
+                <img
+                  src="{{ block.settings.image | img_url: '1600x' }}"
+                  srcset="{{ block.settings.image | img_url: '800x' }} 800w, {{ block.settings.image | img_url: '1200x' }} 1200w, {{ block.settings.image | img_url: '1600x' }} 1600w"
+                  sizes="100vw"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  class="image-fit hero__image"
+                >
+              </div>
+            {% endif %}
+
+            <div class="hero__text-wrap">
+              <div class="page-width">
+                <div class="hero__text-content vertical-bottom horizontal-center">
+                  <div class="hero__text-shadow">
+                    <h2 class="h1 hero__title">{{ block.settings.heading }}</h2>
+                    <div class="hero__subtitle rte">{{ block.settings.subheading }}</div>
+                    {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                      <div class="hero__link">
+                        <a href="{{ block.settings.button_link }}" class="btn">{{ block.settings.button_text }}</a>
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="hero__slide hero__slide--single">
+        {% if section.settings.image != blank %}
+          <div class="hero__image-wrapper">
+            <img
+              src="{{ section.settings.image | img_url: '1600x' }}"
+              srcset="{{ section.settings.image | img_url: '800x' }} 800w, {{ section.settings.image | img_url: '1200x' }} 1200w, {{ section.settings.image | img_url: '1600x' }} 1600w"
+              sizes="100vw"
+              alt="{{ section.settings.image.alt | escape }}"
+              class="image-fit hero__image"
+            >
+          </div>
+        {% endif %}
+
+        <div class="hero__text-wrap">
+          <div class="page-width">
+            <div class="hero__text-content vertical-bottom horizontal-center">
+              <div class="hero__text-shadow">
+                <h2 class="h1 hero__title">{{ section.settings.heading }}</h2>
+                <div class="hero__subtitle rte">{{ section.settings.subheading }}</div>
+                {% if section.settings.button_text != blank and section.settings.button_link != blank %}
+                  <div class="hero__link">
+                    <a href="{{ section.settings.button_link }}" class="btn">{{ section.settings.button_text }}</a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Homepage hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome to Pure Path Store"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Nourish your skin, brighten your radiant beauty every day."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "SHOP NOW!"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Welcome to Pure Path Store"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Nourish your skin, brighten your radiant beauty every day."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "default": "/collections"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage hero",
+      "blocks": [
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

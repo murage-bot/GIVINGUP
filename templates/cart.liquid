@@ -1,0 +1,16 @@
+<div class="page-width">
+  <h1>Shopping Cart</h1>
+  {% if cart.item_count > 0 %}
+    <ul class="cart-items">
+      {% for item in cart.items %}
+        <li>
+          <a href="{{ item.url }}">{{ item.product.title }}</a>
+          &times; {{ item.quantity }}
+        </li>
+      {% endfor %}
+    </ul>
+    <p class="cart-total">Total: {{ cart.total_price | money }}</p>
+  {% else %}
+    <p>Your cart is currently empty.</p>
+  {% endif %}
+</div>

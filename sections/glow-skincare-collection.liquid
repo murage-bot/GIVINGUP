@@ -1,0 +1,110 @@
+<div id="shopify-section-{{ section.id }}" class="shopify-section index-section">
+  {% assign collection = collections[section.settings.collection] %}
+
+  {% if collection %}
+    <div id="CollectionSection-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="collection-template">
+      <div class="page-width">
+        <div class="section-header">
+          <h2 class="section-header__title">
+            {{ section.settings.title | default: collection.title }}
+          </h2>
+
+          <a href="{{ collection.url }}" class="btn btn--secondary btn--small section-header__link">
+            {{ section.settings.view_all_text | default: 'View all' }}
+          </a>
+        </div>
+      </div>
+
+      <div class="page-width page-width--flush-small">
+        <div class="grid-overflow-wrapper">
+          <div class="grid grid--uniform aos-init aos-animate" data-aos="overflow__animation">
+            {% for product in collection.products limit: section.settings.product_limit %}
+              <div class="grid__item grid-product small--one-half medium-up--one-quarter aos-init aos-animate" data-aos="row-of-" data-product-handle="{{ product.handle }}">
+                <div class="grid-product__content">
+                  <a href="{{ product.url }}" class="grid-product__link">
+                    <div class="grid-product__image-mask">
+                      <div class="image-wrap" style="height: 0; padding-bottom: 100.0%;">
+                        {% if product.featured_image %}
+                          <img
+                            class="grid-product__image lazyautosizes"
+                            data-widths="[180, 360, 540, 720, 900, 1080]"
+                            data-aspectratio="1.0"
+                            data-sizes="auto"
+                            src="{{ product.featured_image | image_url: '540x540' }}"
+                            srcset="{{ product.featured_image | image_url: '180x180' }} 180w, {{ product.featured_image | image_url: '360x360' }} 360w, {{ product.featured_image | image_url: '540x540' }} 540w, {{ product.featured_image | image_url: '720x720' }} 720w, {{ product.featured_image | image_url: '900x900' }} 900w, {{ product.featured_image | image_url: '1080x1080' }} 1080w"
+                            sizes="42px"
+                            width="540"
+                            height="540"
+                            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                          >
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <div class="grid-product__meta">
+                      <div class="grid-product__title grid-product__title--body">{{ product.title }}</div>
+                      <div class="grid-product__price">
+                        {% if product.price_varies %}
+                          from {{ product.price | money }}
+                        {% else %}
+                          {{ product.price | money }}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+
+            <div class="grid__item grid__item--view-all text-center small--one-half medium-up--one-quarter medium-up--hide">
+              <a href="{{ collection.url }}" class="grid-product__see-all">
+                {{ section.settings.view_all_text | default: 'View all' }}<br>{{ collection.products_count }} products
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="page-width">
+      <p>Please select a collection in the section settings.</p>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Glow Skincare collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Glow Skincare"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "number",
+      "id": "product_limit",
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all link text",
+      "default": "View all"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Glow Skincare collection"
+    }
+  ]
+}
+{% endschema %}

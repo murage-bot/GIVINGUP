@@ -1,0 +1,108 @@
+﻿<div id="shopify-section-{{ section.id }}" class="shopify-section index-section">
+  <div data-section-id="{{ section.id }}" data-section-type="promo-grid-2">
+    <div class="page-width">
+      <style data-shopify="">
+        .flex-grid--{{ section.id }} {
+          margin-top: -20px;
+          margin-left: -20px;
+        }
+
+        .flex-grid--{{ section.id }} .flex-grid--gutters {
+          margin-top: -20px;
+          margin-left: -20px;
+        }
+
+        .flex-grid--{{ section.id }} .flex-grid__item {
+          padding-top: 20px;
+          padding-left: 20px;
+        }
+
+        @media only screen and (max-width: 589px) {
+          .flex-grid--{{ section.id }} {
+            margin-top: -10px;
+            margin-left: -10px;
+          }
+
+          .flex-grid--{{ section.id }} .flex-grid--gutters {
+            margin-top: -10px;
+            margin-left: -10px;
+          }
+
+          .flex-grid--{{ section.id }} .flex-grid__item {
+            padding-top: 10px;
+            padding-left: 10px;
+          }
+        }
+      </style>
+
+      <div class="promo-grid promo-grid--space-top promo-grid--space-bottom">
+        <div class="flex-grid flex-grid--gutters flex-grid--{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="flex-grid__item {{ block.settings.width }}">
+              <a href="{{ block.settings.link }}" class="promo-grid__container promo-grid__container--framed promo-grid__container--tint vertical-center horizontal-center">
+                {% if block.settings.image != blank %}
+                  <div class="promo-grid__bg" style="background-image: url('{{ block.settings.image | img_url: '1400x' }}');"></div>
+                {% endif %}
+                <div class="promo-grid__content">
+                  <div class="promo-grid__text text-center">
+                    {% if block.settings.title != blank %}
+                      <p class="promo-grid__title h2">{{ block.settings.title }}</p>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promo grid 2",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "promo",
+      "name": "Promo block",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "flex-grid__item--50",
+          "options": [
+            {"value": "flex-grid__item--50", "label": "Half width"},
+            {"value": "flex-grid__item--100", "label": "Full width"}
+          ]
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "default": "/collections/all"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Before"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo grid 2",
+      "category": "Promotions"
+    }
+  ]
+}
+{% endschema %}

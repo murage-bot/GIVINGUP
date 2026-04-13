@@ -1,0 +1,140 @@
+﻿<div id="shopify-section-{{ section.id }}" class="shopify-section index-section">
+  <div data-section-id="{{ section.id }}" data-section-type="promo-grid">
+    <div class="page-width">
+      <style data-shopify="">
+        .flex-grid--{{ section.id }} {
+          margin-top: -20px;
+          margin-left: -20px;
+        }
+
+        .flex-grid--{{ section.id }} .flex-grid--gutters {
+          margin-top: -20px;
+          margin-left: -20px;
+        }
+
+        .flex-grid--{{ section.id }} .flex-grid__item {
+          padding-top: 20px;
+          padding-left: 20px;
+        }
+
+        @media only screen and (max-width: 589px) {
+          .flex-grid--{{ section.id }} {
+            margin-top: -10px;
+            margin-left: -10px;
+          }
+
+          .flex-grid--{{ section.id }} .flex-grid--gutters {
+            margin-top: -10px;
+            margin-left: -10px;
+          }
+
+          .flex-grid--{{ section.id }} .flex-grid__item {
+            padding-top: 10px;
+            padding-left: 10px;
+          }
+        }
+      </style>
+
+      <div class="promo-grid">
+        <div class="flex-grid flex-grid--gutters flex-grid--{{ section.id }}">
+          {% for block in section.blocks %}
+            <div class="flex-grid__item {{ block.settings.width }}">
+              <a href="{{ block.settings.link }}" class="promo-grid__container vertical-center horizontal-left">
+                <div class="promo-grid__content promo-grid__content--boxed promo-grid__content--framed">
+                  <div class="promo-grid__text text-center">
+                    {% if block.settings.label != blank %}
+                      <div class="rte--block rte--em">{{ block.settings.label }}</div>
+                    {% endif %}
+                    {% if block.settings.headline != blank %}
+                      <div class="rte--block rte--strong">{{ block.settings.headline }}</div>
+                    {% endif %}
+                    {% if block.settings.description != blank %}
+                      <div class="rte--block rte--em">{{ block.settings.description }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% if block.settings.image != blank %}
+                  <div class="type-sale-images">
+                    <div class="type-sale-images__crop">
+                      <div class="type-sale-images__image">
+                        <div class="image-wrap" style="height: 0; padding-bottom: 100.0%;">
+                          <img
+                            class="promo-grid__image"
+                            src="{{ block.settings.image | img_url: '800x' }}"
+                            srcset="{{ block.settings.image | img_url: '360x' }} 360w, {{ block.settings.image | img_url: '720x' }} 720w, {{ block.settings.image | img_url: '1080x' }} 1080w"
+                            sizes="(max-width: 589px) 100vw, 50vw"
+                            alt="{{ block.settings.image.alt | escape }}"
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promo grid 1",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "promo",
+      "name": "Promo block",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "flex-grid__item--50",
+          "options": [
+            {"value": "flex-grid__item--50", "label": "Half width"},
+            {"value": "flex-grid__item--100", "label": "Full width"}
+          ]
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "default": "/collections/all"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Up to"
+        },
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Headline",
+          "default": "20% off"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Select products"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Promo image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo grid 1",
+      "category": "Promotions"
+    }
+  ]
+}
+{% endschema %}

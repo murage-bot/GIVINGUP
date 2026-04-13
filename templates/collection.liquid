@@ -1,0 +1,13 @@
+<div class="page-width">
+  <h1>{{ collection.title }}</h1>
+  {% if collection.description != blank %}
+    <div class="collection-description">{{ collection.description }}</div>
+  {% endif %}
+  <ul class="collection-products">
+    {% for product in collection.products limit:5 %}
+      <li><a href="{{ product.url }}">{{ product.title }}</a></li>
+    {% else %}
+      <li>No products were found in this collection.</li>
+    {% endfor %}
+  </ul>
+</div>

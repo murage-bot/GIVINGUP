@@ -1,0 +1,98 @@
+﻿<div id="shopify-section-{{ section.id }}" class="shopify-section index-section">
+  <div data-section-id="{{ section.id }}" data-section-type="collection-feature">
+    <div class="page-width">
+      <div class="section-header">
+        <h2 class="section-header__title">{{ section.settings.heading }}</h2>
+        {% if section.settings.collection != blank and collections[section.settings.collection] and section.settings.show_view_all %}
+          <a href="{{ collections[section.settings.collection].url }}" class="btn btn--secondary btn--small section-header__link">{{ section.settings.view_all_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% assign collection = collections[section.settings.collection] %}
+    {% if collection and collection.products.size > 0 %}
+      <div class="page-width page-width--flush-small">
+        <div class="grid-overflow-wrapper">
+          <div class="grid grid--uniform">
+            {% for product in collection.products | limit: section.settings.product_limit %}
+              <div class="grid__item grid-product small--one-half medium-up--one-quarter">
+                <div class="grid-product__content">
+                  <a href="{{ product.url }}" class="grid-product__link">
+                    {% if product.featured_image %}
+                      <div class="grid-product__image-mask">
+                        <div class="image-wrap" style="height: 0; padding-bottom: 100%;">
+                          <img
+                            class="grid-product__image"
+                            src="{{ product.featured_image | img_url: '540x' }}"
+                            srcset="{{ product.featured_image | img_url: '360x' }} 360w, {{ product.featured_image | img_url: '540x' }} 540w, {{ product.featured_image | img_url: '720x' }} 720w"
+                            sizes="(max-width: 589px) 100vw, 25vw"
+                            alt="{{ product.featured_image.alt | escape }}"
+                          >
+                        </div>
+                      </div>
+                    {% endif %}
+                    <div class="grid-product__meta">
+                      <div class="grid-product__title">{{ product.title }}</div>
+                      <div class="grid-product__price">{{ product.price | money }}</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="page-width text-center">
+        <p>No products found in the selected collection.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection feature",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Collection feature"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "default": ""
+    },
+    {
+      "type": "number",
+      "id": "product_limit",
+      "label": "Product limit",
+      "default": 4,
+      "min": 1,
+      "max": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show view all button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View all"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Collection feature",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

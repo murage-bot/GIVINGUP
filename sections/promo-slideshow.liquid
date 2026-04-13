@@ -1,0 +1,133 @@
+﻿<div id="shopify-section-{{ section.id }}" class="shopify-section index-section index-section--hero">
+  <div data-section-id="{{ section.id }}" data-section-type="promo-slideshow">
+    <div class="slideshow-wrapper">
+      {% if section.blocks.size > 0 %}
+        <div class="hero hero--slideshow" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}" data-show-arrows="{{ section.settings.show_arrows }}" data-show-dots="{{ section.settings.show_dots }}">
+          {% for block in section.blocks %}
+            <div class="hero__slide" id="Slide-{{ block.id }}">
+              {% if block.settings.image != blank %}
+                <div class="hero__image-wrapper">
+                  <img
+                    class="hero__image"
+                    src="{{ block.settings.image | img_url: '1800x' }}"
+                    srcset="{{ block.settings.image | img_url: '720x' }} 720w, {{ block.settings.image | img_url: '1080x' }} 1080w, {{ block.settings.image | img_url: '1800x' }} 1800w"
+                    sizes="100vw"
+                    alt="{{ block.settings.image.alt | escape }}"
+                  >
+                </div>
+              {% endif %}
+
+              {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                <a href="{{ block.settings.button_link }}" class="hero__slide-link" aria-hidden="true"></a>
+              {% endif %}
+
+              <div class="hero__text-wrap">
+                <div class="page-width">
+                  <div class="hero__text-content vertical-bottom horizontal-center">
+                    <div class="hero__text-shadow">
+                      {% if block.settings.heading != blank %}
+                        <h2 class="h1 hero__title">{{ block.settings.heading }}</h2>
+                      {% endif %}
+                      {% if block.settings.subheading != blank %}
+                        <div class="hero__subtitle">{{ block.settings.subheading }}</div>
+                      {% endif %}
+                      {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                        <div class="hero__link">
+                          <a href="{{ block.settings.button_link }}" class="btn">{{ block.settings.button_text }}</a>
+                        </div>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="hero hero--empty">
+          <div class="page-width text-center">
+            <h2 class="h1">Add slideshow slides in the section settings.</h2>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promo slideshow",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Autoplay speed (ms)",
+      "min": 2000,
+      "max": 10000,
+      "step": 500,
+      "default": 5000
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dots",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Slide image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Slide heading",
+          "default": "Shop the latest looks"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Slide text",
+          "default": "Stylish beauty and skincare essentials for every routine."
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link",
+          "default": "/collections/all"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo slideshow",
+      "category": "Slideshow"
+    }
+  ]
+}
+{% endschema %}
